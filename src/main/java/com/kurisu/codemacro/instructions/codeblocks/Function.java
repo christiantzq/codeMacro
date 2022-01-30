@@ -18,6 +18,7 @@ public class Function extends CodeBlock {
     private String[] paramNames;
 
     public Function(String name, final String[] paramNames) {
+        super();
         heap = new HashMap<>();
         this.functionName = name;
         this.paramNames = paramNames; // Length must match values at runtime

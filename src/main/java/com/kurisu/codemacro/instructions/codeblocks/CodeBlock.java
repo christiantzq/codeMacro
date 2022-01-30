@@ -1,5 +1,6 @@
 package com.kurisu.codemacro.instructions.codeblocks;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import com.kurisu.codemacro.instructions.Instruction;
@@ -10,6 +11,10 @@ import com.kurisu.codemacro.instructions.Instruction;
  */
 public abstract class CodeBlock {
     protected List<Instruction> instructions;
+
+    public CodeBlock() {
+        instructions = new LinkedList<>();
+    }
 
     public void addInstruction(Instruction instruction) {
         instructions.add(instruction);

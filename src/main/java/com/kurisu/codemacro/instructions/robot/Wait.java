@@ -21,6 +21,11 @@ public class Wait implements Instruction {
 
     public Wait(Operand operation) throws OperationException, InvalidOperandException, InstructionException {
         Object result = operation.getValue();
+        if(result instanceof Operand){
+            Operand op = (Operand) result;
+            result = op.getValue();
+        }
+        
         if (result instanceof Integer) {
             Integer millies = (Integer) result;
             this.timeMillies = millies * 1000;
