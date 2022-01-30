@@ -1,13 +1,16 @@
-package com.kurisu.code.app;
+package com.kurisu.codemacro;
+
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+@SpringBootTest()
 class AppApplicationTests {
 
 	@Test
 	void contextLoads() {
+
+		
 	}
 
 }
