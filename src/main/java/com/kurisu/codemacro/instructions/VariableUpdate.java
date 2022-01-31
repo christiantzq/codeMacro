@@ -6,13 +6,13 @@ import com.kurisu.codemacro.exceptions.OperationException;
 import com.kurisu.codemacro.instructions.codeblocks.Function;
 import com.kurisu.codemacro.operations.Operand;
 
-public class UpdateVariable implements Instruction {
+public class VariableUpdate implements Instruction {
 
     private Function containerFunction;
     private String varName;
     private Operand value;
 
-    public UpdateVariable(Function containerFunction, String varName, Operand value) {
+    public VariableUpdate(Function containerFunction, String varName, Operand value) {
         this.containerFunction = containerFunction;
         this.varName = varName;
         this.value = value;

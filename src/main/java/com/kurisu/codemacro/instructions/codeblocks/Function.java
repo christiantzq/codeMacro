@@ -19,7 +19,6 @@ public class Function extends CodeBlock {
 
     public Function(String name, final String[] paramNames) {
         super();
-        heap = new HashMap<>();
         this.functionName = name;
         this.paramNames = paramNames; // Length must match values at runtime
     }
@@ -28,8 +27,10 @@ public class Function extends CodeBlock {
             throws InstructionException, OperationException, InvalidOperandException {
         heap = new HashMap<>(); // Clean the slate
         setupParameters(paramValues);
+        System.out.println("=> number of instructions: " + instructions.size());
         for (Instruction instruction : instructions) {
             instruction.execute();
+            System.out.println("- Instruction executed.");
         }
     }
 
@@ -59,9 +60,9 @@ public class Function extends CodeBlock {
     public void assignVariable(String name, Object value) throws InstructionException {
         if (!heap.containsKey(name) && globalHeap.containsKey(name)) {
             throw new InstructionException("[" + name + "] is declared as Global Constant and cannot be changed.");
-        } else {
-            heap.put(name, value);
         }
+        heap.put(name, value);
+        System.out.println("heap added: "+ heap.get(name));
     }
 
     public static void declareGlobalConstant(String name, Object value) throws InstructionException {

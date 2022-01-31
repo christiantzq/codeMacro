@@ -3,6 +3,7 @@ package com.kurisu.codemacro.operations;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.kurisu.codemacro.exceptions.InstructionException;
 import com.kurisu.codemacro.exceptions.InvalidOperandException;
 import com.kurisu.codemacro.exceptions.OperationException;
 import com.kurisu.codemacro.operations.coreoperations.AddOperation;
@@ -43,39 +44,56 @@ public class Operation implements Operand {
      */
     @Override
     public Operand getValue() throws OperationException, InvalidOperandException {
-        // 1. Reduce sub-operations and exec funcTionCalls and get var values
+        // TODO: 1. resolve operations,  exec functions and get var values
 
         solveOperationsOfType(DIVIDE);
         solveOperationsOfType(MULTIPLY);
         solveOperationsOfType(SUBTRACT);
         solveOperationsOfType(ADD); // Also concats
-        
-        // 5. Logic > / < / == / != / || / && / >= / <=
+
+        // TODO: 5. Logic > / < / == / != / || / && / >= / <=
 
         if (operands.size() > 1) {
             throw new OperationException("Operation did not completed succesfully (unable to reduce).");
         } else {
-            return operands.get(0);
+            return operands.get(0); // Reduced result (this should already be Integer, Double, Boolean or String)
         }
     }
 
-    public Operand getResult() throws OperationException, InvalidOperandException {
-        return getValue();
+    /**
+     * Since the Operation is the only implementation of Operand where getValue
+     * returns another Operand,
+     * We can safely asume, after calling getValue we will get only an Operand of a
+     * basic type.
+     * The basic types return an object of it's base type.
+     * 
+     * @return Returns an instance of Integer, Double, Boolean or String
+     * @throws OperationException
+     * @throws InvalidOperandException
+     * @throws InstructionException
+     */
+    public Object getResult() throws OperationException, InvalidOperandException, InstructionException {
+        Operand basicTypeOperand = this.getValue();
+        return basicTypeOperand.getValue();
     }
 
     @Override
     public String getValueAsString() {
-        int operandIndex = 1;
-        int operatorIndex = 0;
-        StringBuilder str = new StringBuilder("(" + operands.get(0).getValueAsString());
-        while (operatorIndex < operators.size()) {
-            str.append(
-                    " " + operators.get(operatorIndex).toString() + " "
-                            + operands.get(operandIndex).getValueAsString());
-            operandIndex++;
-            operatorIndex++;
+        if (operands.size() > 1) {
+            int operandIndex = 1;
+            int operatorIndex = 0;
+            StringBuilder str = new StringBuilder("(" + operands.get(0).getValueAsString());
+            while (operatorIndex < operators.size()) {
+                str.append(
+                        " " + operators.get(operatorIndex).toString() + " "
+                                + operands.get(operandIndex).getValueAsString());
+                operandIndex++;
+                operatorIndex++;
+            }
+            return str.toString() + ")";
         }
-        return str.toString() + ")";
+        // else should only be 1
+        return operands.get(0).getValueAsString();
     }
 
     private void solveOperationsOfType(OperationType targetOperation)
@@ -98,7 +116,8 @@ public class Operation implements Operand {
             }
             loopCounter++;
             if (loopCounter >= 10000) {
-                throw new OperationException("Interrupted infinite loop when reducing Addition/Substraction.");
+                throw new OperationException(
+                        "Interrupted infinite loop when reducing [Operation::solveOperationsOfType].");
             }
         }
     }

@@ -74,7 +74,8 @@ public class KeystrokeEvents {
 		String lowercase = reservedWord.trim().toLowerCase();
 		if (keyWords.containsKey(lowercase))
 			return keyWords.get(lowercase);
-		throw new BadSyntaxException("Requested reserved keyword does not exist. Please check manual.");
+		throw new BadSyntaxException(
+				"Requested reserved keyword [" + reservedWord + "] does not exist. Please check manual.");
 	}
 
 }

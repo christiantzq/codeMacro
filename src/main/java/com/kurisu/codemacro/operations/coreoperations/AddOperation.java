@@ -6,6 +6,7 @@ import com.kurisu.codemacro.exceptions.OperationException;
 import com.kurisu.codemacro.operations.DoubleOperand;
 import com.kurisu.codemacro.operations.IntegerOperand;
 import com.kurisu.codemacro.operations.Operand;
+import com.kurisu.codemacro.operations.Operation;
 import com.kurisu.codemacro.operations.StringOperand;
 
 /**
@@ -25,6 +26,7 @@ public class AddOperation implements CoreOperation {
     public Operand solve() throws InvalidOperandException, OperationException, InstructionException {
         final Object val1 = op1.getValue();
         final Object val2 = op2.getValue();
+
         if (val1 instanceof String || val2 instanceof String) {
             return concat(val1, val2);
         } else if (val1 instanceof Integer && val2 instanceof Integer) {
@@ -43,6 +45,7 @@ public class AddOperation implements CoreOperation {
     private Operand concat(final Object val1, final Object val2) throws InvalidOperandException {
         try {
             String result = op1.getValueAsString() + op2.getValueAsString();
+
             return new StringOperand(result);
         } catch (Exception e) {
             throw new InvalidOperandException("Unable to concat.");

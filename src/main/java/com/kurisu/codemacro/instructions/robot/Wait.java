@@ -4,10 +4,11 @@ import com.kurisu.codemacro.exceptions.InstructionException;
 import com.kurisu.codemacro.exceptions.InvalidOperandException;
 import com.kurisu.codemacro.exceptions.OperationException;
 import com.kurisu.codemacro.instructions.Instruction;
-import com.kurisu.codemacro.operations.Operand;
+import com.kurisu.codemacro.operations.Operation;
 
 public class Wait implements Instruction {
     private int timeMillies;
+    private Operation operation;
 
     public Wait(Double timeSeconds) {
         Double millies = (timeSeconds * 1000);
@@ -19,13 +20,22 @@ public class Wait implements Instruction {
         this.timeMillies = millies;
     }
 
-    public Wait(Operand operation) throws OperationException, InvalidOperandException, InstructionException {
-        Object result = operation.getValue();
-        if(result instanceof Operand){
-            Operand op = (Operand) result;
-            result = op.getValue();
+    public Wait(Operation operation) {
+        this.operation = operation;
+    }
+
+    @Override
+    public void execute() throws OperationException, InvalidOperandException, InstructionException {
+        if (operation != null) {
+            processOperation();
         }
-        
+
+        System.out.println("-- milliseconds: " + timeMillies);
+        CodeBot.getBot().delay(timeMillies);
+    }
+
+    private void processOperation() throws OperationException, InvalidOperandException, InstructionException {
+        Object result = operation.getResult();
         if (result instanceof Integer) {
             Integer millies = (Integer) result;
             this.timeMillies = millies * 1000;
@@ -35,11 +45,6 @@ public class Wait implements Instruction {
         } else {
             throw new InstructionException("Operation inside [wait] does not return a numeric value.");
         }
-    }
-
-    @Override
-    public void execute() throws OperationException, InvalidOperandException, InstructionException {
-        CodeBot.getBot().delay(timeMillies);
     }
 
 }

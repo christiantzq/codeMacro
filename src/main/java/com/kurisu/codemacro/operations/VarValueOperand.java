@@ -32,7 +32,7 @@ public class VarValueOperand implements Operand {
             else if (object instanceof String)
                 return ((String) object);
             else
-                return "Unable to read value from heap. Type not supported";
+                return "Unable to read value of [" + varName + "] from heap, its type is not supported";
         } catch (InstructionException e) {
             return "Unable to read value from heap. " + e.getMessage();
         }

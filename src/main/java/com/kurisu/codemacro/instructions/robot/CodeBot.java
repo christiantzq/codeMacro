@@ -12,14 +12,15 @@ public class CodeBot {
     }
 
     public static Robot getBot() throws InstructionException {
-        if (robot != null) {
-            return robot;
-        }
-        try {
-            return robot = new Robot();
-        } catch (AWTException e) {
-            throw new InstructionException("System Error. Bot cannot be initialized.");
-        }
+        if (robot == null) {
+            try {
+                robot = new Robot();
+                robot.setAutoDelay(5);
+            } catch (AWTException e) {
+                throw new InstructionException("System Error. Bot cannot be initialized.");
+            }
+        }        
+        return robot;
     }
 
 }

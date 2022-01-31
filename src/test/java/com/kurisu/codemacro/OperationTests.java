@@ -25,7 +25,7 @@ public class OperationTests {
             operation.addOperand(OperationType.SUBTRACT, new IntegerOperand(1));
             operation.addOperand(OperationType.ADD, new IntegerOperand(5));
             Assertions.assertThat(operation.getValueAsString()).isEqualTo("(5 + 5 - 1 + 5 - 1 + 5)");
-            Assertions.assertThat(operation.getResult().getValueAsString()).isEqualTo("18");
+            Assertions.assertThat(operation.getValue().getValueAsString()).isEqualTo("18");
         } catch (OperationException e1) {
             e1.printStackTrace();
         } catch (InvalidOperandException e1) {
@@ -39,7 +39,7 @@ public class OperationTests {
             Operation multiplyOperation = new Operation(new IntegerOperand(5));
             multiplyOperation.addOperand(OperationType.MULTIPLY, new DoubleOperand(5.0));
             multiplyOperation.addOperand(OperationType.DIVIDE, new DoubleOperand(5.0));
-            Assertions.assertThat(multiplyOperation.getResult().getValueAsString()).isEqualTo("5.0");
+            Assertions.assertThat(multiplyOperation.getValue().getValueAsString()).isEqualTo("5.0");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -51,7 +51,7 @@ public class OperationTests {
 			Operation concatOperation = new Operation(new StringOperand("Concat result = "));
 			concatOperation.addOperand(OperationType.ADD, new IntegerOperand(5));
             Assertions.assertThat(concatOperation.getValueAsString()).isEqualTo("(Concat result =  + 5)");
-            Assertions.assertThat(concatOperation.getResult().getValueAsString()).isEqualTo("Concat result = 5");
+            Assertions.assertThat(concatOperation.getValue().getValueAsString()).isEqualTo("Concat result = 5");
         } catch (Exception e) {
             e.printStackTrace();
         }
