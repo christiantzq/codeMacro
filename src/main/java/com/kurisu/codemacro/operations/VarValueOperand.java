@@ -1,11 +1,15 @@
 package com.kurisu.codemacro.operations;
 
 import com.kurisu.codemacro.exceptions.InstructionException;
-import com.kurisu.codemacro.exceptions.InvalidOperandException;
+import com.kurisu.codemacro.exceptions.InvalidOperationComponentException;
 import com.kurisu.codemacro.exceptions.OperationException;
 import com.kurisu.codemacro.instructions.codeblocks.Function;
+import com.kurisu.codemacro.operations.operands.Operand;
 
-public class VarValueOperand implements Operand {
+/**
+ * Loads a value from the heap at runtime.
+ */
+public class VarValueOperand implements OperationComponent {
     private Function containerFunction;
     private String varName;
 
@@ -15,27 +19,8 @@ public class VarValueOperand implements Operand {
     }
 
     @Override
-    public Object getValue() throws OperationException, InvalidOperandException, InstructionException {
+    public Operand getOperand() throws OperationException, InvalidOperationComponentException, InstructionException {
         return containerFunction.readVariable(varName);
-    }
-
-    @Override
-    public String getValueAsString() {
-        try {
-            Object object = containerFunction.readVariable(varName);
-            if (object instanceof Integer)
-                return "" + ((Integer) object).toString();
-            else if (object instanceof Double)
-                return "" + ((Double) object).toString();
-            else if (object instanceof Boolean)
-                return "" + ((Boolean) object).toString();
-            else if (object instanceof String)
-                return ((String) object);
-            else
-                return "Unable to read value of [" + varName + "] from heap, its type is not supported";
-        } catch (InstructionException e) {
-            return "Unable to read value from heap. " + e.getMessage();
-        }
     }
 
 }

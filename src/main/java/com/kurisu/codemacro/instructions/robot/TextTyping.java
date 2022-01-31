@@ -1,7 +1,7 @@
 package com.kurisu.codemacro.instructions.robot;
 
 import com.kurisu.codemacro.exceptions.InstructionException;
-import com.kurisu.codemacro.exceptions.InvalidOperandException;
+import com.kurisu.codemacro.exceptions.InvalidOperationComponentException;
 import com.kurisu.codemacro.exceptions.OperationException;
 import com.kurisu.codemacro.instructions.Instruction;
 import com.kurisu.codemacro.operations.Operation;
@@ -19,7 +19,7 @@ public class TextTyping implements Instruction {
     }
 
     @Override
-    public void execute() throws InstructionException, OperationException, InvalidOperandException {
+    public void execute() throws InstructionException, OperationException, InvalidOperationComponentException {
         if (operation != null) {
             text = getTextFromOperation();
         }
@@ -27,7 +27,7 @@ public class TextTyping implements Instruction {
         typer.type(text);
     }
 
-    private String getTextFromOperation() throws OperationException, InvalidOperandException, InstructionException {
+    private String getTextFromOperation() throws OperationException, InvalidOperationComponentException, InstructionException {
         Object result = operation.getResult();
         if (result instanceof Integer)
             return "" + ((Integer) result).toString();

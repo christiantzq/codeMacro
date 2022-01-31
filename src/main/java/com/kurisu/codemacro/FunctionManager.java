@@ -4,9 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.kurisu.codemacro.exceptions.InstructionException;
-import com.kurisu.codemacro.exceptions.InvalidOperandException;
+import com.kurisu.codemacro.exceptions.InvalidOperationComponentException;
 import com.kurisu.codemacro.exceptions.OperationException;
 import com.kurisu.codemacro.instructions.codeblocks.Function;
+import com.kurisu.codemacro.operations.operands.Operand;
 
 /**
  * Holds the predefined list of Functions and provides a way to execute them by
@@ -43,10 +44,10 @@ public class FunctionManager {
 
     }
 
-    public void runFunction(String name, Object[] paramValues)
-            throws InstructionException, OperationException, InvalidOperandException {
-        Function f = getFunction(name);
-        f.run(paramValues);
+    public void runFunction(String name, Operand[] paramValues)
+            throws InstructionException, OperationException, InvalidOperationComponentException {
+        Function func = getFunction(name);
+        func.run(paramValues);
     }
 
 }

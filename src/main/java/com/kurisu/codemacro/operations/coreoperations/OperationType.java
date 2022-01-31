@@ -13,7 +13,7 @@ public enum OperationType {
     GREAT_THAN(">"),
     LESS_THAN("<"),
     GREAT_EQ_THAN(">="),
-    LESS_EQ_THAN("<=");    
+    LESS_EQ_THAN("<=");
 
     private String opStr;
 

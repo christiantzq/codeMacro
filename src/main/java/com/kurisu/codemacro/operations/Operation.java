@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.kurisu.codemacro.exceptions.InstructionException;
-import com.kurisu.codemacro.exceptions.InvalidOperandException;
+import com.kurisu.codemacro.exceptions.InvalidOperationComponentException;
 import com.kurisu.codemacro.exceptions.OperationException;
 import com.kurisu.codemacro.operations.coreoperations.AddOperation;
 import com.kurisu.codemacro.operations.coreoperations.CoreOperation;
@@ -12,6 +12,7 @@ import com.kurisu.codemacro.operations.coreoperations.DivideOperation;
 import com.kurisu.codemacro.operations.coreoperations.MultiplyOperation;
 import com.kurisu.codemacro.operations.coreoperations.OperationType;
 import com.kurisu.codemacro.operations.coreoperations.SubtractOperation;
+import com.kurisu.codemacro.operations.operands.Operand;
 
 import static com.kurisu.codemacro.operations.coreoperations.OperationType.DIVIDE;
 import static com.kurisu.codemacro.operations.coreoperations.OperationType.MULTIPLY;
@@ -19,32 +20,35 @@ import static com.kurisu.codemacro.operations.coreoperations.OperationType.SUBTR
 import static com.kurisu.codemacro.operations.coreoperations.OperationType.ADD;
 
 /**
- * Operand: Object which value affects an operation's return value.
- * Operator: Interacion type between operands.
+ * OperationComponent
+ * Operator: Interacion type between components.
  */
-public class Operation implements Operand {
+public class Operation implements OperationComponent {
+    private List<OperationComponent> components;
     private List<Operand> operands;
-    private List<OperationType> operators;
+    private List<OperationType> operators; // (+) (-) (*) (/)
 
-    public Operation(Operand firstOperand) {
+    public Operation(OperationComponent firstOperand) {
+        components = new LinkedList<>();
         operands = new LinkedList<>();
         operators = new LinkedList<>();
-        operands.add(firstOperand);
+        components.add(firstOperand);
     }
 
-    public void addOperand(OperationType operationType, Operand newOperand) {
+    public void addComponent(OperationType operationType, OperationComponent component) {
         operators.add(operationType);
-        operands.add(newOperand);
+        components.add(component);
     }
 
     /**
      * Reduces all operations into a single Operand (the result)
      * 
-     * @throws InvalidOperandException
+     * @throws InvalidOperationComponentException
+     * @throws InstructionException
      */
     @Override
-    public Operand getValue() throws OperationException, InvalidOperandException {
-        // TODO: 1. resolve operations,  exec functions and get var values
+    public Operand getOperand() throws OperationException, InvalidOperationComponentException, InstructionException {
+        resolveComponentsToOperands();
 
         solveOperationsOfType(DIVIDE);
         solveOperationsOfType(MULTIPLY);
@@ -56,48 +60,23 @@ public class Operation implements Operand {
         if (operands.size() > 1) {
             throw new OperationException("Operation did not completed succesfully (unable to reduce).");
         } else {
-            return operands.get(0); // Reduced result (this should already be Integer, Double, Boolean or String)
+            return operands.get(0);
         }
     }
 
-    /**
-     * Since the Operation is the only implementation of Operand where getValue
-     * returns another Operand,
-     * We can safely asume, after calling getValue we will get only an Operand of a
-     * basic type.
-     * The basic types return an object of it's base type.
-     * 
-     * @return Returns an instance of Integer, Double, Boolean or String
-     * @throws OperationException
-     * @throws InvalidOperandException
-     * @throws InstructionException
-     */
-    public Object getResult() throws OperationException, InvalidOperandException, InstructionException {
-        Operand basicTypeOperand = this.getValue();
-        return basicTypeOperand.getValue();
+    private void resolveComponentsToOperands()
+            throws OperationException, InvalidOperationComponentException, InstructionException {
+        for (OperationComponent comp : components) {
+            operands.add(comp.getOperand());
+        }
     }
 
-    @Override
-    public String getValueAsString() {
-        if (operands.size() > 1) {
-            int operandIndex = 1;
-            int operatorIndex = 0;
-            StringBuilder str = new StringBuilder("(" + operands.get(0).getValueAsString());
-            while (operatorIndex < operators.size()) {
-                str.append(
-                        " " + operators.get(operatorIndex).toString() + " "
-                                + operands.get(operandIndex).getValueAsString());
-                operandIndex++;
-                operatorIndex++;
-            }
-            return str.toString() + ")";
-        }
-        // else should only be 1
-        return operands.get(0).getValueAsString();
+    public Object getResult() throws OperationException, InvalidOperationComponentException, InstructionException {
+        return getOperand().getValue();
     }
 
     private void solveOperationsOfType(OperationType targetOperation)
-            throws InvalidOperandException, OperationException {
+            throws InvalidOperationComponentException, OperationException {
         int loopCounter = 0;
         int leftValueIndex = 0;
         int operationIndex = 0;
@@ -122,7 +101,8 @@ public class Operation implements Operand {
         }
     }
 
-    private CoreOperation getRequestedOperation(OperationType targetOperation, Operand op1, Operand op2)
+    private CoreOperation getRequestedOperation(OperationType targetOperation, Operand op1,
+            Operand op2)
             throws OperationException {
         switch (targetOperation) {
             case ADD:

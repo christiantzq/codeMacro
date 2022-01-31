@@ -4,16 +4,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.kurisu.codemacro.exceptions.InstructionException;
-import com.kurisu.codemacro.exceptions.InvalidOperandException;
+import com.kurisu.codemacro.exceptions.InvalidOperationComponentException;
 import com.kurisu.codemacro.exceptions.OperationException;
 import com.kurisu.codemacro.instructions.Instruction;
-import com.kurisu.codemacro.operations.Operand;
+
+import com.kurisu.codemacro.operations.operands.Operand;
 
 public class Function extends CodeBlock {
-    private static Map<String, Object> globalHeap = new HashMap<>();
+    private static Map<String, Operand> globalHeap = new HashMap<>();
 
     private String functionName;
-    private Map<String, Object> heap;
+    private Map<String, Operand> heap;
     private Operand returnValue;
     private String[] paramNames;
 
@@ -23,8 +24,8 @@ public class Function extends CodeBlock {
         this.paramNames = paramNames; // Length must match values at runtime
     }
 
-    public void run(final Object[] paramValues)
-            throws InstructionException, OperationException, InvalidOperandException {
+    public void run(final Operand[] paramValues)
+            throws InstructionException, OperationException, InvalidOperationComponentException {
         heap = new HashMap<>(); // Clean the slate
         setupParameters(paramValues);
         System.out.println("=> number of instructions: " + instructions.size());
@@ -34,7 +35,7 @@ public class Function extends CodeBlock {
         }
     }
 
-    private void setupParameters(final Object[] paramValues) throws InstructionException {
+    private void setupParameters(final Operand[] paramValues) throws InstructionException {
         if (paramValues.length != paramNames.length) {
             throw new InstructionException(
                     "The number of parameters values provided do not match the definition in [" + functionName
@@ -42,7 +43,7 @@ public class Function extends CodeBlock {
         }
         for (int i = 0; i < paramValues.length; i++) {
             String name = paramNames[i];
-            Object value = paramValues[i];
+            Operand value = paramValues[i];
             assignVariable(name, value);
         }
     }
@@ -57,15 +58,15 @@ public class Function extends CodeBlock {
     // heap.put(name, value);
     // }
 
-    public void assignVariable(String name, Object value) throws InstructionException {
+    public void assignVariable(String name, Operand value) throws InstructionException {
         if (!heap.containsKey(name) && globalHeap.containsKey(name)) {
             throw new InstructionException("[" + name + "] is declared as Global Constant and cannot be changed.");
         }
         heap.put(name, value);
-        System.out.println("heap added: "+ heap.get(name));
+        System.out.println("heap added: " + heap.get(name).getValueAsString());
     }
 
-    public static void declareGlobalConstant(String name, Object value) throws InstructionException {
+    public static void declareGlobalConstant(String name, Operand value) throws InstructionException {
         if (globalHeap.containsKey(name)) {
             throw new InstructionException(
                     "The Global Constant [" + name + "] is already declared and cannot be changed.");
@@ -74,10 +75,10 @@ public class Function extends CodeBlock {
         }
     }
 
-    public Object readVariable(String name) throws InstructionException {
+    public Operand readVariable(String name) throws InstructionException {
         if (!heap.containsKey(name)) {
             if (!globalHeap.containsKey(name)) {
-                throw new InstructionException("Variable [" + name + "] is not declared.");
+                throw new InstructionException("Variable or glocal constant [" + name + "] is not declared.");
             } else {
                 return globalHeap.get(name);
             }

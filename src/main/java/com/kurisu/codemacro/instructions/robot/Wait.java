@@ -1,7 +1,7 @@
 package com.kurisu.codemacro.instructions.robot;
 
 import com.kurisu.codemacro.exceptions.InstructionException;
-import com.kurisu.codemacro.exceptions.InvalidOperandException;
+import com.kurisu.codemacro.exceptions.InvalidOperationComponentException;
 import com.kurisu.codemacro.exceptions.OperationException;
 import com.kurisu.codemacro.instructions.Instruction;
 import com.kurisu.codemacro.operations.Operation;
@@ -25,7 +25,7 @@ public class Wait implements Instruction {
     }
 
     @Override
-    public void execute() throws OperationException, InvalidOperandException, InstructionException {
+    public void execute() throws OperationException, InvalidOperationComponentException, InstructionException {
         if (operation != null) {
             processOperation();
         }
@@ -34,7 +34,7 @@ public class Wait implements Instruction {
         CodeBot.getBot().delay(timeMillies);
     }
 
-    private void processOperation() throws OperationException, InvalidOperandException, InstructionException {
+    private void processOperation() throws OperationException, InvalidOperationComponentException, InstructionException {
         Object result = operation.getResult();
         if (result instanceof Integer) {
             Integer millies = (Integer) result;

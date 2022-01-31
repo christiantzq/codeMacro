@@ -1,10 +1,10 @@
 package com.kurisu.codemacro.operations.coreoperations;
 
 import com.kurisu.codemacro.exceptions.InstructionException;
-import com.kurisu.codemacro.exceptions.InvalidOperandException;
+import com.kurisu.codemacro.exceptions.InvalidOperationComponentException;
 import com.kurisu.codemacro.exceptions.OperationException;
-import com.kurisu.codemacro.operations.DoubleOperand;
-import com.kurisu.codemacro.operations.Operand;
+import com.kurisu.codemacro.operations.operands.DoubleOperand;
+import com.kurisu.codemacro.operations.operands.Operand;
 
 /**
  * Multiplies two given numeric values. Always returns a Double.
@@ -19,7 +19,7 @@ public class MultiplyOperation implements CoreOperation {
     }
 
     @Override
-    public Operand solve() throws InvalidOperandException, OperationException, InstructionException {
+    public Operand solve() throws InvalidOperationComponentException, OperationException, InstructionException {
         final Object val1 = op1.getValue();
         final Object val2 = op2.getValue();
 
@@ -33,7 +33,7 @@ public class MultiplyOperation implements CoreOperation {
         } else if (val1 instanceof Double) {
             val1Double = (Double) val1;
         } else {
-            throw new InvalidOperandException("Multiplication first operand is not valid.");
+            throw new InvalidOperationComponentException("Multiplication first operand is not valid.");
         }
 
         if (val2 instanceof Integer) {
@@ -41,7 +41,7 @@ public class MultiplyOperation implements CoreOperation {
         } else if (val2 instanceof Double) {
             val1Double = (Double) val2;
         } else {
-            throw new InvalidOperandException("Multiplication second operand is not valid.");
+            throw new InvalidOperationComponentException("Multiplication second operand is not valid.");
         }
 
         Operand result = new DoubleOperand(val1Integer * val1Double * val2Integer * val2Double);

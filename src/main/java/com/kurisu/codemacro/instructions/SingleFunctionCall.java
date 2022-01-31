@@ -2,9 +2,9 @@ package com.kurisu.codemacro.instructions;
 
 import com.kurisu.codemacro.FunctionManager;
 import com.kurisu.codemacro.exceptions.InstructionException;
-import com.kurisu.codemacro.exceptions.InvalidOperandException;
+import com.kurisu.codemacro.exceptions.InvalidOperationComponentException;
 import com.kurisu.codemacro.exceptions.OperationException;
-import com.kurisu.codemacro.operations.Operand;
+import com.kurisu.codemacro.operations.operands.Operand;
 
 /**
  * Single calls only.
@@ -12,21 +12,15 @@ import com.kurisu.codemacro.operations.Operand;
  */
 public class SingleFunctionCall implements Instruction {
     private String functioName;
-    private Operand[] processableParameters;
+    private Operand[] paramValues;
 
-    public SingleFunctionCall(String functionName, Operand[] processableParameters) throws InstructionException {
+    public SingleFunctionCall(String functionName, Operand[] paramValues) throws InstructionException {
         this.functioName = functionName;
-        this.processableParameters = processableParameters;
+        this.paramValues = paramValues;
     }
 
     @Override
-    public void execute() throws InstructionException, OperationException, InvalidOperandException {
-
-        Object[] paramValues = new Object[processableParameters.length];
-        for (int i = 0; i < paramValues.length; i++) {
-            paramValues[i] = processableParameters[i].getValue();
-        }
-
+    public void execute() throws InstructionException, OperationException, InvalidOperationComponentException {
         FunctionManager.getInstance().runFunction(functioName, paramValues);
     }
 
