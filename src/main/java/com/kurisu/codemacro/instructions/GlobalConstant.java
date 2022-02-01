@@ -9,11 +9,11 @@ import com.kurisu.codemacro.operations.operands.Operand;
 /**
  * Maps the script to an Instruction for declaring Global Constants.
  */
-public class GlobalConstantDeclaration implements Instruction {
+public class GlobalConstant implements Instruction {
     private String name;
     private Operand value;
 
-    public GlobalConstantDeclaration(final String name, final Operand value) {
+    public GlobalConstant(final String name, final Operand value) {
         this.name = name;
         this.value = value;
     }

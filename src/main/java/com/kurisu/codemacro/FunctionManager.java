@@ -28,7 +28,8 @@ public class FunctionManager {
         return functionManager;
     }
 
-    public void declareFunction(String name, Function function) throws InstructionException {
+    public void declareFunction(Function function) throws InstructionException {
+        String name = function.getName();
         if (functions.containsKey(name)) {
             throw new InstructionException("The function [" + name + "] is already declared.");
         }

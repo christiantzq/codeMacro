@@ -99,4 +99,8 @@ public class Function extends CodeBlock {
         return returnValue;
     }
 
+    public String getName(){
+        return functionName;
+    }
+
 }
