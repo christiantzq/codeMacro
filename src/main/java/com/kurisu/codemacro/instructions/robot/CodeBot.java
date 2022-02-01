@@ -5,6 +5,9 @@ import java.awt.Robot;
 
 import com.kurisu.codemacro.exceptions.InstructionException;
 
+/**
+ * Singleton to access the bot
+ */
 public class CodeBot {
     private static Robot robot;
 

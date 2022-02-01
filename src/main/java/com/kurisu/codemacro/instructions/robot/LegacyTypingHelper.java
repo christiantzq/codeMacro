@@ -8,6 +8,8 @@ import com.kurisu.codemacro.exceptions.InstructionException;
 
 /**
  * TODO: This is legacy code, needs revamp.
+ * 
+ * It handles string typing.
  */
 public class LegacyTypingHelper {
 

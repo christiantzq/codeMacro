@@ -11,7 +11,7 @@ import com.kurisu.codemacro.operations.operands.Operand;
 
 /**
  * Holds the predefined list of Functions and provides a way to execute them by
- * name and params.
+ * name with its params.
  */
 public class FunctionManager {
     private static FunctionManager functionManager;

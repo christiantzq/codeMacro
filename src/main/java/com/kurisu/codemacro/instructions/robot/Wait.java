@@ -6,6 +6,12 @@ import com.kurisu.codemacro.exceptions.OperationException;
 import com.kurisu.codemacro.instructions.Instruction;
 import com.kurisu.codemacro.operations.Operation;
 
+/**
+ * Maps the script Instruction for making pauses in between the script exection.
+ * 
+ * The input is in seconds, hardcoded with a numeric value or dynamically
+ * assigned using an Operation.
+ */
 public class Wait implements Instruction {
     private int timeMillies;
     private Operation operation;
@@ -34,8 +40,9 @@ public class Wait implements Instruction {
         CodeBot.getBot().delay(timeMillies);
     }
 
-    private void processOperation() throws OperationException, InvalidOperationComponentException, InstructionException {
-        Object result = operation.getResult();
+    private void processOperation()
+            throws OperationException, InvalidOperationComponentException, InstructionException {
+        Object result = operation.getOperand().getValue();
         if (result instanceof Integer) {
             Integer millies = (Integer) result;
             this.timeMillies = millies * 1000;

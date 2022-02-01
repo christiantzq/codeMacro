@@ -20,8 +20,15 @@ import static com.kurisu.codemacro.operations.coreoperations.OperationType.SUBTR
 import static com.kurisu.codemacro.operations.coreoperations.OperationType.ADD;
 
 /**
- * OperationComponent
- * Operator: Interacion type between components.
+ * An operation is always meant to return a single reduced value from a given
+ * set of components (and/or operands)
+ * 
+ * i.e. ("Result = " + (myVariable * 5 - myFunction(7)))
+ * 
+ * - Nested perentesis operations are reduced first along with Function calls
+ * and getting variable values.
+ * - After converting all components into operands, the algorithm reduces the
+ * operand values in pairs using the priority: (/) -> (*) -> (-) -> (+)
  */
 public class Operation implements OperationComponent {
     private List<OperationComponent> components;
@@ -53,7 +60,7 @@ public class Operation implements OperationComponent {
         solveOperationsOfType(DIVIDE);
         solveOperationsOfType(MULTIPLY);
         solveOperationsOfType(SUBTRACT);
-        solveOperationsOfType(ADD); // Also concats
+        solveOperationsOfType(ADD); // This also concats
 
         // TODO: 5. Logic > / < / == / != / || / && / >= / <=
 
@@ -66,18 +73,18 @@ public class Operation implements OperationComponent {
 
     private void resolveComponentsToOperands()
             throws OperationException, InvalidOperationComponentException, InstructionException {
-        for (OperationComponent comp : components) {
-            operands.add(comp.getOperand());
+        for (OperationComponent component : components) {
+            operands.add(component.getOperand());
         }
     }
 
+    @Deprecated
     public Object getResult() throws OperationException, InvalidOperationComponentException, InstructionException {
         return getOperand().getValue();
     }
 
-    private void solveOperationsOfType(OperationType targetOperation)
+    private void solveOperationsOfType(final OperationType targetOperation)
             throws InvalidOperationComponentException, OperationException {
-        int loopCounter = 0;
         int leftValueIndex = 0;
         int operationIndex = 0;
         int totalOperations = operators.size();
@@ -86,22 +93,17 @@ public class Operation implements OperationComponent {
             final OperationType currentOperation = operators.get(operationIndex);
             final Operand op2 = operands.get(leftValueIndex + 1); // right value index
             if (currentOperation == targetOperation) {
-                CoreOperation coreOperation = getRequestedOperation(targetOperation, op1, op2);
-                solveCoreOperation(coreOperation, leftValueIndex, operationIndex);
+                CoreOperation coreOperation = createCoreOperation(targetOperation, op1, op2);
+                solveAndReduce(coreOperation, leftValueIndex, operationIndex);
                 totalOperations--;
             } else {
                 leftValueIndex++;
                 operationIndex++;
             }
-            loopCounter++;
-            if (loopCounter >= 10000) {
-                throw new OperationException(
-                        "Interrupted infinite loop when reducing [Operation::solveOperationsOfType].");
-            }
         }
     }
 
-    private CoreOperation getRequestedOperation(OperationType targetOperation, Operand op1,
+    private CoreOperation createCoreOperation(OperationType targetOperation, Operand op1,
             Operand op2)
             throws OperationException {
         switch (targetOperation) {
@@ -118,7 +120,7 @@ public class Operation implements OperationComponent {
         }
     }
 
-    private void solveCoreOperation(CoreOperation operation, int leftValueIndex, int operationIndex)
+    private void solveAndReduce(CoreOperation operation, int leftValueIndex, int operationIndex)
             throws OperationException {
         try {
             operands.remove(leftValueIndex + 1);

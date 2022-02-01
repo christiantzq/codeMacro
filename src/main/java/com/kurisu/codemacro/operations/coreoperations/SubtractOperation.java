@@ -7,6 +7,9 @@ import com.kurisu.codemacro.operations.operands.DoubleOperand;
 import com.kurisu.codemacro.operations.operands.IntegerOperand;
 import com.kurisu.codemacro.operations.operands.Operand;
 
+/**
+ * Subtracs a numeric value from another.
+ */
 public class SubtractOperation implements CoreOperation {
     private Operand op1;
     private Operand op2;
@@ -29,7 +32,8 @@ public class SubtractOperation implements CoreOperation {
         } else if (val1 instanceof Double && val2 instanceof Integer) {
             return getMixedValueDoubleFirst(val1, val2);
         } else {
-            throw new InvalidOperationComponentException("Cannot subtract " + val1.getClass() + " minus " + val2.getClass());
+            throw new InvalidOperationComponentException(
+                    "Cannot subtract " + val1.getClass() + " minus " + val2.getClass());
         }
     }
 
@@ -53,23 +57,27 @@ public class SubtractOperation implements CoreOperation {
         }
     }
 
-    private Operand getMixedValueIntFirst(final Object val1, final Object val2) throws InvalidOperationComponentException {
+    private Operand getMixedValueIntFirst(final Object val1, final Object val2)
+            throws InvalidOperationComponentException {
         try {
             final Integer value1 = (Integer) val1;
             final Double value2 = (Double) val2;
             return new DoubleOperand(value1 - value2);
         } catch (Exception e) {
-            throw new InvalidOperationComponentException("Cannot get floating|integer value for subtraction operation.");
+            throw new InvalidOperationComponentException(
+                    "Cannot get floating|integer value for subtraction operation.");
         }
     }
 
-    private Operand getMixedValueDoubleFirst(final Object val1, final Object val2) throws InvalidOperationComponentException {
+    private Operand getMixedValueDoubleFirst(final Object val1, final Object val2)
+            throws InvalidOperationComponentException {
         try {
             final Double value1 = (Double) val1;
             final Integer value2 = (Integer) val2;
             return new DoubleOperand(value1 - value2);
         } catch (Exception e) {
-            throw new InvalidOperationComponentException("Cannot get floating|integer value for subtraction operation.");
+            throw new InvalidOperationComponentException(
+                    "Cannot get floating|integer value for subtraction operation.");
         }
     }
 

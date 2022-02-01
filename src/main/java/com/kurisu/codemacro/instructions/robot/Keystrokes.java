@@ -6,6 +6,8 @@ import com.kurisu.codemacro.exceptions.InstructionException;
 import com.kurisu.codemacro.instructions.Instruction;
 
 /**
+ * Maps the script to a keystroke Instruction
+ * 
  * Handles simple keyboard strokes like 'enter'
  * and combinations like 'control + c'
  */

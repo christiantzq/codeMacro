@@ -5,8 +5,11 @@ import com.kurisu.codemacro.exceptions.InvalidOperationComponentException;
 import com.kurisu.codemacro.exceptions.OperationException;
 import com.kurisu.codemacro.operations.OperationComponent;
 
+/**
+ * Wraps a Boolean.
+ * Returns a Boolean.
+ */
 public class BooleanOperand implements OperationComponent, Operand {
-
     Boolean value;
 
     public BooleanOperand(Boolean value) {

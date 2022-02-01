@@ -7,13 +7,14 @@ import com.kurisu.codemacro.instructions.codeblocks.Function;
 import com.kurisu.codemacro.operations.operands.Operand;
 
 /**
- * Loads a value from the heap at runtime.
+ * Component of an Operation.
+ * It loads a value from the heap at runtime and assigns it to an Operand
  */
-public class VarValueOperand implements OperationComponent {
+public class VariableReaderComponent implements OperationComponent {
     private Function containerFunction;
     private String varName;
 
-    public VarValueOperand(Function containerFunction, String varName) {
+    public VariableReaderComponent(Function containerFunction, String varName) {
         this.containerFunction = containerFunction;
         this.varName = varName;
     }

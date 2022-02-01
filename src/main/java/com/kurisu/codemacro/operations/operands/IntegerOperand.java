@@ -5,8 +5,11 @@ import com.kurisu.codemacro.exceptions.InvalidOperationComponentException;
 import com.kurisu.codemacro.exceptions.OperationException;
 import com.kurisu.codemacro.operations.OperationComponent;
 
+/**
+ * Wraps an Integer.
+ * Returns an Integer.
+ */
 public class IntegerOperand implements OperationComponent, Operand {
-
     private Integer value;
 
     public IntegerOperand(Integer value) {

@@ -6,6 +6,9 @@ import com.kurisu.codemacro.exceptions.OperationException;
 import com.kurisu.codemacro.instructions.codeblocks.Function;
 import com.kurisu.codemacro.operations.operands.Operand;
 
+/**
+ * Maps the script to an Instruction for declaring Global Constants.
+ */
 public class GlobalConstantDeclaration implements Instruction {
     private String name;
     private Operand value;

@@ -5,6 +5,10 @@ import com.kurisu.codemacro.exceptions.InvalidOperationComponentException;
 import com.kurisu.codemacro.exceptions.OperationException;
 import com.kurisu.codemacro.operations.OperationComponent;
 
+/**
+ * Wraps a Double.
+ * Returns a Double.
+ */
 public class DoubleOperand implements OperationComponent, Operand {
     private Double value;
 

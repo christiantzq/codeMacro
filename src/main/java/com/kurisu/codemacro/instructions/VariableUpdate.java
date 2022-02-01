@@ -7,6 +7,11 @@ import com.kurisu.codemacro.instructions.codeblocks.Function;
 import com.kurisu.codemacro.operations.Operation;
 import com.kurisu.codemacro.operations.operands.Operand;
 
+/**
+ * Maps a script instruction for assigning a value to a given variable.
+ * 
+ * i.e. myVar = 5
+ */
 public class VariableUpdate implements Instruction {
 
     private Function containerFunction;

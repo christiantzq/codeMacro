@@ -7,6 +7,9 @@ import com.kurisu.codemacro.operations.operands.DoubleOperand;
 import com.kurisu.codemacro.operations.operands.IntegerOperand;
 import com.kurisu.codemacro.operations.operands.Operand;
 
+/**
+ * Divides two numeric values.
+ */
 public class DivideOperation implements CoreOperation {
     private Operand op1;
     private Operand op2;

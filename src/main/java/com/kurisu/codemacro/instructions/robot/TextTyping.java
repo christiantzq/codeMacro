@@ -6,6 +6,12 @@ import com.kurisu.codemacro.exceptions.OperationException;
 import com.kurisu.codemacro.instructions.Instruction;
 import com.kurisu.codemacro.operations.Operation;
 
+/**
+ * Maps the script Instruction for Typing a String.
+ * 
+ * It can receive the hardcoded text or it can be assigned dynamically with an
+ * Operation.
+ */
 public class TextTyping implements Instruction {
     private String text;
     private Operation operation;
@@ -21,24 +27,10 @@ public class TextTyping implements Instruction {
     @Override
     public void execute() throws InstructionException, OperationException, InvalidOperationComponentException {
         if (operation != null) {
-            text = getTextFromOperation();
+            text = operation.getOperand().getValueAsString();
         }
         LegacyTypingHelper typer = new LegacyTypingHelper();
         typer.type(text);
-    }
-
-    private String getTextFromOperation() throws OperationException, InvalidOperationComponentException, InstructionException {
-        Object result = operation.getResult();
-        if (result instanceof Integer)
-            return "" + ((Integer) result).toString();
-        else if (result instanceof Double)
-            return "" + ((Double) result).toString();
-        else if (result instanceof Boolean)
-            return "" + ((Boolean) result).toString();
-        else if (result instanceof String)
-            return ((String) result);
-        else
-            throw new InstructionException("Type not supported text typing instruction.");
     }
 
 }

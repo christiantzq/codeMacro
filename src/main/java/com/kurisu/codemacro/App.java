@@ -8,7 +8,7 @@ import com.kurisu.codemacro.instructions.robot.TextTyping;
 import com.kurisu.codemacro.instructions.robot.Wait;
 import com.kurisu.codemacro.interpreter.KeystrokeEvents;
 import com.kurisu.codemacro.operations.Operation;
-import com.kurisu.codemacro.operations.VarValueOperand;
+import com.kurisu.codemacro.operations.VariableReaderComponent;
 import com.kurisu.codemacro.operations.coreoperations.OperationType;
 import com.kurisu.codemacro.operations.operands.DoubleOperand;
 import com.kurisu.codemacro.operations.operands.IntegerOperand;
@@ -41,7 +41,7 @@ public class App {
 			main.addInstruction(new VariableUpdate(main, "x1", new IntegerOperand(5)));
 
 			Operation op2 = new Operation(new StringOperand("The result of the sum is: "));
-			Operation op3 = new Operation(new VarValueOperand(main, "x1"));
+			Operation op3 = new Operation(new VariableReaderComponent(main, "x1"));
 			op3.addComponent(OperationType.ADD, new DoubleOperand(3.5));
 			op2.addComponent(OperationType.ADD, op3);
 			main.addInstruction(new TextTyping(op2));
@@ -62,14 +62,13 @@ public class App {
 
 			main.addInstruction(new TextTyping(opD));
 
-			main.run(new Operand[0]);
 
+			// RUN
+			main.run(new Operand[0]);
 			System.out.println("Finished.");
 
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-
 		}
 
 	}

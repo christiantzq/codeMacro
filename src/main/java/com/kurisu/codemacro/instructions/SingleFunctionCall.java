@@ -7,8 +7,9 @@ import com.kurisu.codemacro.exceptions.OperationException;
 import com.kurisu.codemacro.operations.operands.Operand;
 
 /**
- * Single calls only.
- * It does not return any value
+ * Maps a script Instruction for Function calls
+ * - Single calls only.
+ * - It does not return any value.
  */
 public class SingleFunctionCall implements Instruction {
     private String functioName;

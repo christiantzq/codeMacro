@@ -10,6 +10,14 @@ import com.kurisu.codemacro.instructions.Instruction;
 
 import com.kurisu.codemacro.operations.operands.Operand;
 
+/**
+ * Functions are blocks of code in the script that run instructions one by one.
+ * 
+ * - They hold a private heap to store variables.
+ * - There is a shared global heap for constant only.
+ * - They can receive parameters, the same are loaded into the heap right after
+ * they are called to run.
+ */
 public class Function extends CodeBlock {
     private static Map<String, Operand> globalHeap = new HashMap<>();
 
