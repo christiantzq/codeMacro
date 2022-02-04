@@ -12,7 +12,6 @@ import com.kurisu.codemacro.interpreter.KeystrokeEvents;
 import com.kurisu.codemacro.operations.Operation;
 import com.kurisu.codemacro.operations.VariableReaderComponent;
 import com.kurisu.codemacro.operations.coreoperations.OperationType;
-import com.kurisu.codemacro.operations.operands.DoubleOperand;
 import com.kurisu.codemacro.operations.operands.IntegerOperand;
 import com.kurisu.codemacro.operations.operands.Operand;
 import com.kurisu.codemacro.operations.operands.StringOperand;
