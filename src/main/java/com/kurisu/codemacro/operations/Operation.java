@@ -18,6 +18,7 @@ import static com.kurisu.codemacro.operations.coreoperations.OperationType.DIVID
 import static com.kurisu.codemacro.operations.coreoperations.OperationType.MULTIPLY;
 import static com.kurisu.codemacro.operations.coreoperations.OperationType.SUBTRACT;
 import static com.kurisu.codemacro.operations.coreoperations.OperationType.ADD;
+import static com.kurisu.codemacro.operations.coreoperations.OperationType.REMINDER;
 
 /**
  * An operation is always meant to return a single reduced value from a given
@@ -59,6 +60,7 @@ public class Operation implements OperationComponent {
 
         solveOperationsOfType(DIVIDE);
         solveOperationsOfType(MULTIPLY);
+        solveOperationsOfType(REMINDER);
         solveOperationsOfType(SUBTRACT);
         solveOperationsOfType(ADD); // This also concats
 
