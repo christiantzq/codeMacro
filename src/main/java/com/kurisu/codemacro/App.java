@@ -1,6 +1,14 @@
 package com.kurisu.codemacro;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StreamTokenizer;
+
 import com.kurisu.codemacro.exceptions.BadSyntaxException;
+import com.kurisu.codemacro.exceptions.InstructionException;
+import com.kurisu.codemacro.exceptions.InvalidOperationComponentException;
+import com.kurisu.codemacro.exceptions.OperationException;
 import com.kurisu.codemacro.instructions.GlobalConstant;
 import com.kurisu.codemacro.instructions.SingleFunctionCall;
 import com.kurisu.codemacro.instructions.VariableUpdate;
@@ -9,6 +17,7 @@ import com.kurisu.codemacro.instructions.robot.Keystrokes;
 import com.kurisu.codemacro.instructions.robot.TextTyping;
 import com.kurisu.codemacro.instructions.robot.Wait;
 import com.kurisu.codemacro.interpreter.KeystrokeEvents;
+import com.kurisu.codemacro.interpreter.SimpleInterpreter;
 import com.kurisu.codemacro.operations.Operation;
 import com.kurisu.codemacro.operations.VariableReaderComponent;
 import com.kurisu.codemacro.operations.coreoperations.OperationType;
@@ -24,6 +33,15 @@ public class App {
 	public static void main(String[] args) {
 		// SpringApplication.run(App.class, args);
 
+		try {
+			new SimpleInterpreter().interprete("file.txt").run(new Operand[0]);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	private void test() {
 		try {
 			int[] enter = { key("enter") };
 
@@ -78,7 +96,6 @@ public class App {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	// Helper method
@@ -107,7 +124,7 @@ public class App {
  * type("result : " + ( (5*5) + (3+2) ) )
  * 
  * fun myFunc(){
- *   type "inside my function"
+ * type "inside my function"
  * }
  * 
  */

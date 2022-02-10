@@ -1,0 +1,38 @@
+# This is a comment and should be ignored 1 , < ( ) {} + -
+
+wait(1)         # Robot instruction with operation (Integer)
+alt + tab       # Modiffier + key
+wait 1          # Robot instruction with value
+windows + R     # Modiffier + key
+wait(0.5)
+type "notepad"  # Robot instruction
+enter           # Keystroke (Reserved Key) (not alphanumeric)
+wait(2)
+
+# This is a comment and should be ignored 1 , < ( ) {} + -
+
+x1 = 5          # Local Variable declaration
+x1 = x1 + 1     # Local variable modification (must be already declared)
+global y1 = 5   # Global Variable declaration
+y1 = 5          # Global Variable modification NOT ALLOWED!
+
+type("The result of the sum is: " + (x + y))
+if(1 >= 0){
+    myFunc(1, 2)
+}
+type('And the result is : ' + ( (5*5) + (3+2) ) )
+
+fn myFunc(var1, var2){
+    type ("inside my function" + (var1 * var2))
+}
+
+
+
+
+#
+# reserved word
+#
+#
+#
+#
+#

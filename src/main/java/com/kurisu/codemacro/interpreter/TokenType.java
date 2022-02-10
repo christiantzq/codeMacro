@@ -1,0 +1,35 @@
+package com.kurisu.codemacro.interpreter;
+
+public enum TokenType {
+    NUMBER_LITERAL,
+    STRING_LITERAL,    
+    WAIT_COMMAND,
+    TYPE_COMMAND,
+    IF_BLOCK,
+    WHILE_BLOCK,
+    FOR_BLOCK,
+    VAR_DEFINITION,
+    VAR_READING,
+    GLOBAL_CONSTANT,
+    FUNCTION_DEFINITION,
+    FUNCTION_CALL,
+    KEY_CODE,
+    // Symbols
+    OPEN_PARETHESIS,
+    CLOSE_PARETHESIS,
+    OPEN_CURLY_BRACKET,
+    CLOSE_CURLY_BRACKET,
+    COMMA_CHAR,
+    PIPE_CHAR,
+    AMPERSAND_CHAR,
+    PLUS_CHAR,
+    MINUS_CHAR,
+    MUITIPLY_CHAR,
+    DIVIDE_CHAR,
+    MODULE_CHAR,
+    GREATER_THAN_CHAR,
+    LESS_THAN_CHAR,
+    EQUALS_CHAR,
+    // variables and functions
+    UNDEFINED
+}
