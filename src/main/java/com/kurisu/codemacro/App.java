@@ -1,14 +1,6 @@
 package com.kurisu.codemacro;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.StreamTokenizer;
-
 import com.kurisu.codemacro.exceptions.BadSyntaxException;
-import com.kurisu.codemacro.exceptions.InstructionException;
-import com.kurisu.codemacro.exceptions.InvalidOperationComponentException;
-import com.kurisu.codemacro.exceptions.OperationException;
 import com.kurisu.codemacro.instructions.GlobalConstant;
 import com.kurisu.codemacro.instructions.SingleFunctionCall;
 import com.kurisu.codemacro.instructions.VariableUpdate;
@@ -34,7 +26,7 @@ public class App {
 		// SpringApplication.run(App.class, args);
 
 		try {
-			new SimpleInterpreter().interprete("file.txt").run(new Operand[0]);
+			new SimpleInterpreter().interprete("file.txt");//.run(new Operand[0]);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

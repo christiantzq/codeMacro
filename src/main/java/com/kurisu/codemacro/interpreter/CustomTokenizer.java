@@ -4,13 +4,14 @@ import java.io.IOException;
 import java.io.StreamTokenizer;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.kurisu.codemacro.exceptions.BadSyntaxException;
 import com.kurisu.codemacro.exceptions.InstructionException;
 
+/**
+ * Uses tokens from a StreamTokenizer to generate our custom Tokens
+ */
 public class CustomTokenizer {
     private static final int SINGLE_QUOTE_CHARACTER = '\'';
     private static final int DOUBLE_QUOTE_CHARACTER = '"';
